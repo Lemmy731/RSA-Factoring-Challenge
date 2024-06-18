@@ -1,0 +1,29 @@
+import math
+import sys
+
+def find_factors(n):
+    if n <= 1:
+        return None, None
+    if n % 2 == 0:
+        return 2, n // 2
+    limit = int(math.sqrt(n)) + 1
+    for i in range(3, limit, 2):
+        if n % i == 0:
+            return i, n // i
+    return None, None
+
+def main(filename):
+    with open(filename, 'r') as file:
+        for line in file:
+            n = int(line.strip())
+            p, q = find_factors(n)
+            if p and q:
+                print(f"{n}={p}*{q}")
+            else:
+                print(f"Failed to factorize {n}")
+
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print("Usage: ./rsa <file>")
+        sys.exit(1)
+    main(sys.argv[1])
